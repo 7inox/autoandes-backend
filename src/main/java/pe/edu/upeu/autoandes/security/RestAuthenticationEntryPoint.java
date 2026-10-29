@@ -1,0 +1,4 @@
+package pe.edu.upeu.autoandes.security;
+import org.springframework.stereotype.Component; import org.springframework.security.web.AuthenticationEntryPoint; import jakarta.servlet.http.*; import org.springframework.security.core.AuthenticationException; import java.io.IOException; import tools.jackson.databind.ObjectMapper; import lombok.RequiredArgsConstructor; import pe.edu.upeu.autoandes.exception.GlobalExceptionHandler;
+@Component @RequiredArgsConstructor public class RestAuthenticationEntryPoint implements AuthenticationEntryPoint {private final ObjectMapper mapper;
+ public void commence(HttpServletRequest r,HttpServletResponse s,AuthenticationException e)throws IOException{s.setStatus(401);s.setContentType("application/json");s.setCharacterEncoding("UTF-8");mapper.writeValue(s.getWriter(),GlobalExceptionHandler.error(401,"Autenticación requerida o token inválido",r.getRequestURI(),null));}}

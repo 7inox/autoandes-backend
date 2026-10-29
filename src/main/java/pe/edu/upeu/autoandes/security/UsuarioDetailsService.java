@@ -1,0 +1,4 @@
+package pe.edu.upeu.autoandes.security;
+import org.springframework.stereotype.Service; import org.springframework.transaction.annotation.Transactional; import org.springframework.security.core.userdetails.*; import lombok.RequiredArgsConstructor; import pe.edu.upeu.autoandes.repository.UsuarioRepository;
+@Service @RequiredArgsConstructor public class UsuarioDetailsService implements UserDetailsService {private final UsuarioRepository usuarios;
+ @Transactional(readOnly=true) public UserDetails loadUserByUsername(String username){var u=usuarios.findByUsername(username).orElseThrow(()->new UsernameNotFoundException("Credenciales inválidas"));var roles=u.getRoles().stream().map(r->r.getNombre()).collect(java.util.stream.Collectors.toSet());return User.withUsername(u.getUsername()).password(u.getPassword()).disabled(!Boolean.TRUE.equals(u.getActivo())).authorities(PermisosPorRol.permisos(roles).toArray(String[]::new)).build();}}
