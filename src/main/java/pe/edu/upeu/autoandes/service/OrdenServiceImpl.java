@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service; import org.springframework.transa
   if(d.detalles().stream().map(DetalleRequestDTO::servicioId).distinct().count()!=d.detalles().size())throw new DomainException(400,"No se permite repetir servicios");
   var orden=new OrdenServicio(); orden.setVehiculo(vehiculo);orden.setFecha(LocalDateTime.now(clock));orden.setEstado("REGISTRADA");orden.setKilometraje(d.kilometraje());orden.setUsuarioRegistro(username);orden.setTotal(BigDecimal.ZERO);
   // Oracle sequences are not transactional: gaps after rollback are expected; numbers remain unique.
-  Number n=(Number)em.createNativeQuery("SELECT SEQ_ORDEN_NUMERO.NEXTVAL FROM DUAL",Number.class).getSingleResult();
+  Number n=(Number)em.createNativeQuery("SELECT SEQ_ORDEN_NUMERO.NEXTVAL FROM DUAL",Long.class).getSingleResult();
   orden.setNumero("OS-%06d".formatted(n.longValue()));ordenes.saveAndFlush(orden);
   for(var linea:d.detalles()){
    var servicio=servicios.findById(linea.servicioId()).orElseThrow(()->DomainException.missing("Servicio"));
@@ -26,3 +26,4 @@ import org.springframework.stereotype.Service; import org.springframework.transa
  public List<OrdenResponseDTO> listar(String placa,String estado,LocalDate desde,LocalDate hasta){fechas(desde,hasta);if(estado!=null&&!Set.of("REGISTRADA","ANULADA").contains(estado))throw new DomainException(400,"Estado inválido");return ordenes.filtrar(placa,estado,desde==null?null:desde.atStartOfDay(),hasta==null?null:hasta.plusDays(1).atStartOfDay()).stream().map(mapper::orden).toList();}
  public List<IngresoProjection> ingresos(LocalDate desde,LocalDate hasta){fechas(desde,hasta);return detalles.ingresos(desde==null?null:desde.atStartOfDay(),hasta==null?null:hasta.plusDays(1).atStartOfDay());}
 }
+
