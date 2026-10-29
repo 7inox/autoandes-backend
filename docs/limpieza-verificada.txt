@@ -1,0 +1,12 @@
+Detalles temporales retirados: 2
+�rdenes temporales retiradas: 1
+Veh�culos temporales retirados: 1
+Servicios temporales retirados: 1
+CLIENTE=6
+SERVICIO=8
+VEHICULO=8
+ORDEN_SERVICIO=4
+DETALLE_ORDEN=8
+USUARIOS=4
+ROLES=3
+USUARIO_ROLES=4

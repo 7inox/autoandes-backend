@@ -1,0 +1,814 @@
+[ {
+  "caso" : "Login admin",
+  "ruta" : "/auth/login",
+  "observado" : 200,
+  "esperado" : 200,
+  "respuesta" : {
+    "tipo" : "Bearer",
+    "expiraEnSegundos" : 3600,
+    "nombreCompleto" : "Administrador AutoAndes",
+    "roles" : [ "ADMIN" ],
+    "permisos" : [ "ORDEN_ANULAR", "ORDEN_LEER", "ORDEN_REGISTRAR", "REPORTE_VER", "SERVICIO_ESCRIBIR", "SERVICIO_LEER", "VEHICULO_ESCRIBIR", "VEHICULO_LEER" ]
+  },
+  "metodo" : "POST"
+}, {
+  "caso" : "Login asesor",
+  "ruta" : "/auth/login",
+  "observado" : 200,
+  "esperado" : 200,
+  "respuesta" : {
+    "tipo" : "Bearer",
+    "expiraEnSegundos" : 3600,
+    "nombreCompleto" : "Asesor de Servicio",
+    "roles" : [ "ASESOR" ],
+    "permisos" : [ "ORDEN_LEER", "ORDEN_REGISTRAR", "SERVICIO_LEER", "VEHICULO_ESCRIBIR", "VEHICULO_LEER" ]
+  },
+  "metodo" : "POST"
+}, {
+  "caso" : "Login jefe",
+  "ruta" : "/auth/login",
+  "observado" : 200,
+  "esperado" : 200,
+  "respuesta" : {
+    "tipo" : "Bearer",
+    "expiraEnSegundos" : 3600,
+    "nombreCompleto" : "Jefe de Taller",
+    "roles" : [ "JEFE_TALLER" ],
+    "permisos" : [ "ORDEN_ANULAR", "ORDEN_LEER", "REPORTE_VER", "SERVICIO_ESCRIBIR", "SERVICIO_LEER", "VEHICULO_LEER" ]
+  },
+  "metodo" : "POST"
+}, {
+  "caso" : "Cuenta inactiva",
+  "ruta" : "/auth/login",
+  "observado" : 401,
+  "esperado" : 401,
+  "respuesta" : {
+    "timestamp" : "2026-10-29T10:29:53.191425",
+    "status" : 401,
+    "error" : "Unauthorized",
+    "mensaje" : "Credenciales inválidas",
+    "ruta" : "/api/v1/auth/login"
+  },
+  "metodo" : "POST"
+}, {
+  "caso" : "Credencial incorrecta",
+  "ruta" : "/auth/login",
+  "observado" : 401,
+  "esperado" : 401,
+  "respuesta" : {
+    "timestamp" : "2026-10-29T10:29:53.2637476",
+    "status" : 401,
+    "error" : "Unauthorized",
+    "mensaje" : "Credenciales inválidas",
+    "ruta" : "/api/v1/auth/login"
+  },
+  "metodo" : "POST"
+}, {
+  "caso" : "Sin token",
+  "ruta" : "/servicios",
+  "observado" : 401,
+  "esperado" : 401,
+  "respuesta" : {
+    "timestamp" : "2026-10-29T10:29:53.2686482",
+    "status" : 401,
+    "error" : "Unauthorized",
+    "mensaje" : "Autenticación requerida o token inválido",
+    "ruta" : "/api/v1/servicios"
+  },
+  "metodo" : "GET"
+}, {
+  "caso" : "Token alterado",
+  "ruta" : "/servicios",
+  "observado" : 401,
+  "esperado" : 401,
+  "respuesta" : {
+    "timestamp" : "2026-10-29T10:29:53.2949301",
+    "status" : 401,
+    "error" : "Unauthorized",
+    "mensaje" : "Autenticación requerida o token inválido",
+    "ruta" : "/api/v1/servicios"
+  },
+  "metodo" : "GET"
+}, {
+  "caso" : "Token vencido firmado",
+  "ruta" : "/servicios",
+  "observado" : 401,
+  "esperado" : 401,
+  "respuesta" : {
+    "timestamp" : "2026-10-29T10:29:53.3135364",
+    "status" : 401,
+    "error" : "Unauthorized",
+    "mensaje" : "Autenticación requerida o token inválido",
+    "ruta" : "/api/v1/servicios"
+  },
+  "metodo" : "GET"
+}, {
+  "caso" : "Usuario actual",
+  "ruta" : "/auth/me",
+  "observado" : 200,
+  "esperado" : 200,
+  "respuesta" : {
+    "username" : "admin",
+    "nombreCompleto" : "Administrador AutoAndes",
+    "roles" : [ "ADMIN" ],
+    "permisos" : [ "ORDEN_ANULAR", "ORDEN_LEER", "ORDEN_REGISTRAR", "REPORTE_VER", "SERVICIO_ESCRIBIR", "SERVICIO_LEER", "VEHICULO_ESCRIBIR", "VEHICULO_LEER" ]
+  },
+  "metodo" : "GET"
+}, {
+  "caso" : "Asesor sin reporte",
+  "ruta" : "/reportes/ingresos-por-servicio",
+  "observado" : 403,
+  "esperado" : 403,
+  "respuesta" : {
+    "timestamp" : "2026-10-29T10:29:53.3529271",
+    "status" : 403,
+    "error" : "Forbidden",
+    "mensaje" : "No tiene permiso para esta operación",
+    "ruta" : "/api/v1/reportes/ingresos-por-servicio"
+  },
+  "metodo" : "GET"
+}, {
+  "caso" : "Asesor sin anulacion",
+  "ruta" : "/ordenes/1/anular",
+  "observado" : 403,
+  "esperado" : 403,
+  "respuesta" : {
+    "timestamp" : "2026-10-29T10:29:53.3694143",
+    "status" : 403,
+    "error" : "Forbidden",
+    "mensaje" : "No tiene permiso para esta operación",
+    "ruta" : "/api/v1/ordenes/1/anular"
+  },
+  "metodo" : "PATCH"
+}, {
+  "caso" : "Jefe sin registro",
+  "ruta" : "/ordenes",
+  "observado" : 403,
+  "esperado" : 403,
+  "respuesta" : {
+    "timestamp" : "2026-10-29T10:29:53.4053463",
+    "status" : 403,
+    "error" : "Forbidden",
+    "mensaje" : "No tiene permiso para esta operación",
+    "ruta" : "/api/v1/ordenes"
+  },
+  "metodo" : "POST"
+}, {
+  "caso" : "Clientes Oracle",
+  "ruta" : "/clientes",
+  "observado" : 200,
+  "esperado" : 200,
+  "respuesta" : [ {
+    "id" : 1,
+    "documento" : "70123456",
+    "nombres" : "Ana Torres",
+    "telefono" : "987654321"
+  }, {
+    "id" : 2,
+    "documento" : "70234567",
+    "nombres" : "Luis Rojas",
+    "telefono" : "987654322"
+  }, {
+    "id" : 3,
+    "documento" : "70345678",
+    "nombres" : "Carmen Diaz",
+    "telefono" : "987654323"
+  }, {
+    "id" : 4,
+    "documento" : "70456789",
+    "nombres" : "Jorge Salazar",
+    "telefono" : "987654324"
+  }, {
+    "id" : 5,
+    "documento" : "70567890",
+    "nombres" : "Rosa Vargas",
+    "telefono" : "987654325"
+  }, {
+    "id" : 6,
+    "documento" : "70678901",
+    "nombres" : "Pedro Quispe",
+    "telefono" : "987654326"
+  } ],
+  "metodo" : "GET"
+}, {
+  "caso" : "Servicio crear",
+  "ruta" : "/servicios",
+  "observado" : 201,
+  "esperado" : 201,
+  "respuesta" : {
+    "id" : 15,
+    "codigo" : "SRV-991",
+    "nombre" : "Prueba integración A",
+    "precio" : 37.5,
+    "duracionMin" : 30,
+    "activo" : true
+  },
+  "metodo" : "POST"
+}, {
+  "caso" : "Segundo servicio",
+  "ruta" : "/servicios",
+  "observado" : 201,
+  "esperado" : 201,
+  "respuesta" : {
+    "id" : 16,
+    "codigo" : "SRV-992",
+    "nombre" : "Prueba integración B",
+    "precio" : 37.5,
+    "duracionMin" : 30,
+    "activo" : true
+  },
+  "metodo" : "POST"
+}, {
+  "caso" : "Servicio consultar",
+  "ruta" : "/servicios/15",
+  "observado" : 200,
+  "esperado" : 200,
+  "respuesta" : {
+    "id" : 15,
+    "codigo" : "SRV-991",
+    "nombre" : "Prueba integración A",
+    "precio" : 37.5,
+    "duracionMin" : 30,
+    "activo" : true
+  },
+  "metodo" : "GET"
+}, {
+  "caso" : "Servicio editar",
+  "ruta" : "/servicios/15",
+  "observado" : 204,
+  "esperado" : 204,
+  "respuesta" : { },
+  "metodo" : "PUT"
+}, {
+  "caso" : "Codigo duplicado",
+  "ruta" : "/servicios",
+  "observado" : 409,
+  "esperado" : 409,
+  "respuesta" : {
+    "timestamp" : "2026-10-29T10:29:53.5914805",
+    "status" : 409,
+    "error" : "Conflict",
+    "mensaje" : "El código de servicio ya existe",
+    "ruta" : "/api/v1/servicios"
+  },
+  "metodo" : "POST"
+}, {
+  "caso" : "Formato invalido",
+  "ruta" : "/servicios",
+  "observado" : 400,
+  "esperado" : 400,
+  "respuesta" : {
+    "timestamp" : "2026-10-29T10:29:53.6199467",
+    "status" : 400,
+    "error" : "Bad Request",
+    "mensaje" : "Datos inválidos",
+    "ruta" : "/api/v1/servicios",
+    "campos" : {
+      "nombre" : "el tamaño debe estar entre 3 y 80",
+      "codigo" : "El código debe tener el formato SRV-000"
+    }
+  },
+  "metodo" : "POST"
+}, {
+  "caso" : "Recurso inexistente",
+  "ruta" : "/servicios/99999999",
+  "observado" : 404,
+  "esperado" : 404,
+  "respuesta" : {
+    "timestamp" : "2026-10-29T10:29:53.6333483",
+    "status" : 404,
+    "error" : "Not Found",
+    "mensaje" : "Servicio no encontrado",
+    "ruta" : "/api/v1/servicios/99999999"
+  },
+  "metodo" : "GET"
+}, {
+  "caso" : "Vehiculo crear",
+  "ruta" : "/vehiculos",
+  "observado" : 201,
+  "esperado" : 201,
+  "respuesta" : {
+    "id" : 13,
+    "placa" : "ZZT-991",
+    "marca" : "PruebaLP2",
+    "modelo" : "Integracion",
+    "anio" : 2026,
+    "clienteId" : 1,
+    "clienteNombre" : "Ana Torres"
+  },
+  "metodo" : "POST"
+}, {
+  "caso" : "Vehiculo editar",
+  "ruta" : "/vehiculos/13",
+  "observado" : 204,
+  "esperado" : 204,
+  "respuesta" : { },
+  "metodo" : "PUT"
+}, {
+  "caso" : "Vehiculo consultar",
+  "ruta" : "/vehiculos/13",
+  "observado" : 200,
+  "esperado" : 200,
+  "respuesta" : {
+    "id" : 13,
+    "placa" : "ZZT-991",
+    "marca" : "PruebaLP2",
+    "modelo" : "Integracion",
+    "anio" : 2026,
+    "clienteId" : 1,
+    "clienteNombre" : "Ana Torres"
+  },
+  "metodo" : "GET"
+}, {
+  "caso" : "Placa duplicada",
+  "ruta" : "/vehiculos",
+  "observado" : 409,
+  "esperado" : 409,
+  "respuesta" : {
+    "timestamp" : "2026-10-29T10:29:53.7158644",
+    "status" : 409,
+    "error" : "Conflict",
+    "mensaje" : "La placa ya existe",
+    "ruta" : "/api/v1/vehiculos"
+  },
+  "metodo" : "POST"
+}, {
+  "caso" : "Cliente inexistente",
+  "ruta" : "/vehiculos",
+  "observado" : 404,
+  "esperado" : 404,
+  "respuesta" : {
+    "timestamp" : "2026-10-29T10:29:53.7276056",
+    "status" : 404,
+    "error" : "Not Found",
+    "mensaje" : "Cliente no encontrado",
+    "ruta" : "/api/v1/vehiculos"
+  },
+  "metodo" : "POST"
+}, {
+  "caso" : "Vehiculo formato invalido",
+  "ruta" : "/vehiculos",
+  "observado" : 400,
+  "esperado" : 400,
+  "respuesta" : {
+    "timestamp" : "2026-10-29T10:29:53.7356575",
+    "status" : 400,
+    "error" : "Bad Request",
+    "mensaje" : "Datos inválidos",
+    "ruta" : "/api/v1/vehiculos",
+    "campos" : {
+      "placa" : "La placa debe tener el formato ABC-123"
+    }
+  },
+  "metodo" : "POST"
+}, {
+  "caso" : "Filtro cliente",
+  "ruta" : "/vehiculos?clienteId=1",
+  "observado" : 200,
+  "esperado" : 200,
+  "respuesta" : [ {
+    "id" : 13,
+    "placa" : "ZZT-991",
+    "marca" : "PruebaLP2",
+    "modelo" : "Integracion",
+    "anio" : 2026,
+    "clienteId" : 1,
+    "clienteNombre" : "Ana Torres"
+  }, {
+    "id" : 1,
+    "placa" : "AAA-111",
+    "marca" : "Toyota",
+    "modelo" : "Corolla",
+    "anio" : 2019,
+    "clienteId" : 1,
+    "clienteNombre" : "Ana Torres"
+  }, {
+    "id" : 7,
+    "placa" : "GGG-777",
+    "marca" : "Toyota",
+    "modelo" : "Yaris",
+    "anio" : 2022,
+    "clienteId" : 1,
+    "clienteNombre" : "Ana Torres"
+  }, {
+    "id" : 12,
+    "placa" : "ZZT-994",
+    "marca" : "Toyota",
+    "modelo" : "Prueba visual editada LP2",
+    "anio" : 2026,
+    "clienteId" : 1,
+    "clienteNombre" : "Ana Torres"
+  } ],
+  "metodo" : "GET"
+}, {
+  "caso" : "Rollback tercer detalle inactivo",
+  "ruta" : "/ordenes",
+  "observado" : 409,
+  "esperado" : 409,
+  "respuesta" : {
+    "timestamp" : "2026-10-29T10:29:53.8522267",
+    "status" : 409,
+    "error" : "Conflict",
+    "mensaje" : "El servicio SRV-008 está inactivo",
+    "ruta" : "/api/v1/ordenes"
+  },
+  "metodo" : "POST"
+}, {
+  "caso" : "Rollback SQL antes/despues",
+  "detallesAntes" : 10,
+  "cabecerasDespues" : 5,
+  "cabecerasAntes" : 5,
+  "detallesDespues" : 10
+}, {
+  "caso" : "Servicios repetidos",
+  "ruta" : "/ordenes",
+  "observado" : 400,
+  "esperado" : 400,
+  "respuesta" : {
+    "timestamp" : "2026-10-29T10:29:53.8706805",
+    "status" : 400,
+    "error" : "Bad Request",
+    "mensaje" : "No se permite repetir servicios",
+    "ruta" : "/api/v1/ordenes"
+  },
+  "metodo" : "POST"
+}, {
+  "caso" : "Cantidad fuera de rango",
+  "ruta" : "/ordenes",
+  "observado" : 400,
+  "esperado" : 400,
+  "respuesta" : {
+    "timestamp" : "2026-10-29T10:29:53.8807202",
+    "status" : 400,
+    "error" : "Bad Request",
+    "mensaje" : "Datos inválidos",
+    "ruta" : "/api/v1/ordenes",
+    "campos" : {
+      "detalles[0].cantidad" : "debe ser menor que o igual a 5"
+    }
+  },
+  "metodo" : "POST"
+}, {
+  "caso" : "Orden correcta dos detalles",
+  "ruta" : "/ordenes",
+  "observado" : 201,
+  "esperado" : 201,
+  "respuesta" : {
+    "id" : 10,
+    "numero" : "OS-000011",
+    "fecha" : "2026-10-29T10:29:53.8933515",
+    "vehiculoId" : 13,
+    "placa" : "ZZT-991",
+    "clienteNombre" : "Ana Torres",
+    "kilometraje" : 100,
+    "estado" : "REGISTRADA",
+    "total" : 112.5,
+    "usuarioRegistro" : "asesor",
+    "motivoAnulacion" : null,
+    "detalles" : [ {
+      "id" : 17,
+      "servicioId" : 15,
+      "servicioCodigo" : "SRV-991",
+      "servicioNombre" : "Prueba integración editada",
+      "cantidad" : 1,
+      "precioUnitario" : 37.5,
+      "subtotal" : 37.5
+    }, {
+      "id" : 18,
+      "servicioId" : 16,
+      "servicioCodigo" : "SRV-992",
+      "servicioNombre" : "Prueba integración B",
+      "cantidad" : 2,
+      "precioUnitario" : 37.5,
+      "subtotal" : 75.0
+    } ]
+  },
+  "metodo" : "POST"
+}, {
+  "caso" : "Kilometraje inferior",
+  "ruta" : "/ordenes",
+  "observado" : 409,
+  "esperado" : 409,
+  "respuesta" : {
+    "timestamp" : "2026-10-29T10:29:53.9330299",
+    "status" : 409,
+    "error" : "Conflict",
+    "mensaje" : "El kilometraje no puede ser inferior al último registrado: 100",
+    "ruta" : "/api/v1/ordenes"
+  },
+  "metodo" : "POST"
+}, {
+  "caso" : "Servicio usado no eliminable",
+  "ruta" : "/servicios/15",
+  "observado" : 409,
+  "esperado" : 409,
+  "respuesta" : {
+    "timestamp" : "2026-10-29T10:29:53.9466406",
+    "status" : 409,
+    "error" : "Conflict",
+    "mensaje" : "El servicio tiene órdenes; utilice PATCH /servicios/15/estado para darlo de baja",
+    "ruta" : "/api/v1/servicios/15"
+  },
+  "metodo" : "DELETE"
+}, {
+  "caso" : "Vehiculo con orden no eliminable",
+  "ruta" : "/vehiculos/13",
+  "observado" : 409,
+  "esperado" : 409,
+  "respuesta" : {
+    "timestamp" : "2026-10-29T10:29:53.9616495",
+    "status" : 409,
+    "error" : "Conflict",
+    "mensaje" : "El vehículo tiene órdenes y no puede eliminarse",
+    "ruta" : "/api/v1/vehiculos/13"
+  },
+  "metodo" : "DELETE"
+}, {
+  "caso" : "Servicio baja logica",
+  "ruta" : "/servicios/15/estado",
+  "observado" : 200,
+  "esperado" : 200,
+  "respuesta" : {
+    "id" : 15,
+    "codigo" : "SRV-991",
+    "nombre" : "Prueba integración editada",
+    "precio" : 37.5,
+    "duracionMin" : 30,
+    "activo" : false
+  },
+  "metodo" : "PATCH"
+}, {
+  "caso" : "Servicio inactivo",
+  "ruta" : "/ordenes",
+  "observado" : 409,
+  "esperado" : 409,
+  "respuesta" : {
+    "timestamp" : "2026-10-29T10:29:53.9994882",
+    "status" : 409,
+    "error" : "Conflict",
+    "mensaje" : "El servicio SRV-991 está inactivo",
+    "ruta" : "/api/v1/ordenes"
+  },
+  "metodo" : "POST"
+}, {
+  "caso" : "Reporte antes de anular",
+  "ruta" : "/reportes/ingresos-por-servicio",
+  "observado" : 200,
+  "esperado" : 200,
+  "respuesta" : [ {
+    "cantidadTotal" : 3,
+    "codigo" : "SRV-002",
+    "importeTotal" : 300,
+    "servicio" : "Alineamiento"
+  }, {
+    "cantidadTotal" : 2,
+    "codigo" : "SRV-001",
+    "importeTotal" : 240,
+    "servicio" : "Cambio de aceite"
+  }, {
+    "cantidadTotal" : 1,
+    "codigo" : "SRV-005",
+    "importeTotal" : 180,
+    "servicio" : "Afinamiento"
+  }, {
+    "cantidadTotal" : 2,
+    "codigo" : "SRV-003",
+    "importeTotal" : 140,
+    "servicio" : "Balanceo de ruedas"
+  }, {
+    "cantidadTotal" : 1,
+    "codigo" : "SRV-004",
+    "importeTotal" : 90,
+    "servicio" : "Revision de frenos"
+  }, {
+    "cantidadTotal" : 1,
+    "codigo" : "SRV-006",
+    "importeTotal" : 80,
+    "servicio" : "Diagnostico electrico"
+  }, {
+    "cantidadTotal" : 2,
+    "codigo" : "SRV-992",
+    "importeTotal" : 75,
+    "servicio" : "Prueba integración B"
+  }, {
+    "cantidadTotal" : 1,
+    "codigo" : "SRV-991",
+    "importeTotal" : 37.5,
+    "servicio" : "Prueba integración editada"
+  } ],
+  "metodo" : "GET"
+}, {
+  "caso" : "Motivo corto",
+  "ruta" : "/ordenes/10/anular",
+  "observado" : 400,
+  "esperado" : 400,
+  "respuesta" : {
+    "timestamp" : "2026-10-29T10:29:54.0333053",
+    "status" : 400,
+    "error" : "Bad Request",
+    "mensaje" : "Datos inválidos",
+    "ruta" : "/api/v1/ordenes/10/anular",
+    "campos" : {
+      "motivo" : "el tamaño debe estar entre 10 y 200"
+    }
+  },
+  "metodo" : "PATCH"
+}, {
+  "caso" : "Anulacion fuera del dia",
+  "ruta" : "/ordenes/10/anular",
+  "observado" : 409,
+  "esperado" : 409,
+  "respuesta" : {
+    "timestamp" : "2026-10-29T10:29:54.0544395",
+    "status" : 409,
+    "error" : "Conflict",
+    "mensaje" : "La orden solo puede anularse el mismo día de su registro",
+    "ruta" : "/api/v1/ordenes/10/anular"
+  },
+  "metodo" : "PATCH"
+}, {
+  "caso" : "Anulacion valida",
+  "ruta" : "/ordenes/10/anular",
+  "observado" : 200,
+  "esperado" : 200,
+  "respuesta" : {
+    "id" : 10,
+    "numero" : "OS-000011",
+    "fecha" : "2026-10-29T15:29:54.058334",
+    "vehiculoId" : 13,
+    "placa" : "ZZT-991",
+    "clienteNombre" : "Ana Torres",
+    "kilometraje" : 100,
+    "estado" : "ANULADA",
+    "total" : 112.5,
+    "usuarioRegistro" : "asesor",
+    "motivoAnulacion" : "Prueba controlada de integración",
+    "detalles" : [ {
+      "id" : 17,
+      "servicioId" : 15,
+      "servicioCodigo" : "SRV-991",
+      "servicioNombre" : "Prueba integración editada",
+      "cantidad" : 1,
+      "precioUnitario" : 37.5,
+      "subtotal" : 37.5
+    }, {
+      "id" : 18,
+      "servicioId" : 16,
+      "servicioCodigo" : "SRV-992",
+      "servicioNombre" : "Prueba integración B",
+      "cantidad" : 2,
+      "precioUnitario" : 37.5,
+      "subtotal" : 75
+    } ]
+  },
+  "metodo" : "PATCH"
+}, {
+  "caso" : "Doble anulacion",
+  "ruta" : "/ordenes/10/anular",
+  "observado" : 409,
+  "esperado" : 409,
+  "respuesta" : {
+    "timestamp" : "2026-10-29T10:29:54.0928285",
+    "status" : 409,
+    "error" : "Conflict",
+    "mensaje" : "Solo se anula una orden REGISTRADA",
+    "ruta" : "/api/v1/ordenes/10/anular"
+  },
+  "metodo" : "PATCH"
+}, {
+  "caso" : "Reporte excluye anuladas",
+  "ruta" : "/reportes/ingresos-por-servicio",
+  "observado" : 200,
+  "esperado" : 200,
+  "respuesta" : [ {
+    "cantidadTotal" : 3,
+    "codigo" : "SRV-002",
+    "importeTotal" : 300,
+    "servicio" : "Alineamiento"
+  }, {
+    "cantidadTotal" : 2,
+    "codigo" : "SRV-001",
+    "importeTotal" : 240,
+    "servicio" : "Cambio de aceite"
+  }, {
+    "cantidadTotal" : 1,
+    "codigo" : "SRV-005",
+    "importeTotal" : 180,
+    "servicio" : "Afinamiento"
+  }, {
+    "cantidadTotal" : 2,
+    "codigo" : "SRV-003",
+    "importeTotal" : 140,
+    "servicio" : "Balanceo de ruedas"
+  }, {
+    "cantidadTotal" : 1,
+    "codigo" : "SRV-004",
+    "importeTotal" : 90,
+    "servicio" : "Revision de frenos"
+  }, {
+    "cantidadTotal" : 1,
+    "codigo" : "SRV-006",
+    "importeTotal" : 80,
+    "servicio" : "Diagnostico electrico"
+  } ],
+  "metodo" : "GET"
+}, {
+  "caso" : "Filtros combinados",
+  "ruta" : "/ordenes?placa=ZZT-991&estado=ANULADA&desde=2026-01-01&hasta=2027-12-31",
+  "observado" : 200,
+  "esperado" : 200,
+  "respuesta" : [ {
+    "id" : 10,
+    "numero" : "OS-000011",
+    "fecha" : "2026-10-29T15:29:54.058334",
+    "vehiculoId" : 13,
+    "placa" : "ZZT-991",
+    "clienteNombre" : "Ana Torres",
+    "kilometraje" : 100,
+    "estado" : "ANULADA",
+    "total" : 112.5,
+    "usuarioRegistro" : "asesor",
+    "motivoAnulacion" : "Prueba controlada de integración",
+    "detalles" : [ {
+      "id" : 17,
+      "servicioId" : 15,
+      "servicioCodigo" : "SRV-991",
+      "servicioNombre" : "Prueba integración editada",
+      "cantidad" : 1,
+      "precioUnitario" : 37.5,
+      "subtotal" : 37.5
+    }, {
+      "id" : 18,
+      "servicioId" : 16,
+      "servicioCodigo" : "SRV-992",
+      "servicioNombre" : "Prueba integración B",
+      "cantidad" : 2,
+      "precioUnitario" : 37.5,
+      "subtotal" : 75
+    } ]
+  } ],
+  "metodo" : "GET"
+}, {
+  "caso" : "Consulta sin resultados",
+  "ruta" : "/ordenes?placa=ZZZ-000",
+  "observado" : 200,
+  "esperado" : 200,
+  "respuesta" : [ ],
+  "metodo" : "GET"
+}, {
+  "caso" : "Rango fechas invalido",
+  "ruta" : "/ordenes?desde=2026-12-31&hasta=2026-01-01",
+  "observado" : 400,
+  "esperado" : 400,
+  "respuesta" : {
+    "timestamp" : "2026-10-29T10:29:54.1500474",
+    "status" : 400,
+    "error" : "Bad Request",
+    "mensaje" : "La fecha desde no puede superar hasta",
+    "ruta" : "/api/v1/ordenes"
+  },
+  "metodo" : "GET"
+}, {
+  "caso" : "Servicio sin uso",
+  "ruta" : "/servicios",
+  "observado" : 201,
+  "esperado" : 201,
+  "respuesta" : {
+    "id" : 17,
+    "codigo" : "SRV-993",
+    "nombre" : "Prueba eliminación",
+    "precio" : 37.5,
+    "duracionMin" : 30,
+    "activo" : true
+  },
+  "metodo" : "POST"
+}, {
+  "caso" : "Servicio eliminar",
+  "ruta" : "/servicios/17",
+  "observado" : 204,
+  "esperado" : 204,
+  "respuesta" : { },
+  "metodo" : "DELETE"
+}, {
+  "caso" : "Vehiculo sin orden",
+  "ruta" : "/vehiculos",
+  "observado" : 201,
+  "esperado" : 201,
+  "respuesta" : {
+    "id" : 14,
+    "placa" : "ZZT-993",
+    "marca" : "PruebaLP2",
+    "modelo" : "Integracion",
+    "anio" : 2026,
+    "clienteId" : 1,
+    "clienteNombre" : "Ana Torres"
+  },
+  "metodo" : "POST"
+}, {
+  "caso" : "Vehiculo eliminar",
+  "ruta" : "/vehiculos/14",
+  "observado" : 204,
+  "esperado" : 204,
+  "respuesta" : { },
+  "metodo" : "DELETE"
+} ]

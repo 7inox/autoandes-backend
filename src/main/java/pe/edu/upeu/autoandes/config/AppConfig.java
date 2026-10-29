@@ -1,3 +1,12 @@
 package pe.edu.upeu.autoandes.config;
-import org.springframework.context.annotation.*; import java.time.*;
-@Configuration public class AppConfig {@Bean public Clock clock(){return Clock.system(ZoneId.of("America/Lima"));}}
+
+import java.time.*;
+import org.springframework.context.annotation.*;
+
+@Configuration
+public class AppConfig {
+  @Bean
+  public Clock clock() {
+    return Clock.system(ZoneId.of("America/Lima"));
+  }
+}
